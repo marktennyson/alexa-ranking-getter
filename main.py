@@ -17,7 +17,7 @@ class RankScrapper:
         self.rankData:str = self.soup.find("div", {"class": "rankmini-rank"})
         self.timeEnd:float = time()
         self.totalTimeTaken:float = float("%0.2f"%(self.timeEnd - self.timeStart))
-        try: return (int(self.rankData.text.strip()[1:]), self.totalTimeTaken)
+        try: return (int(self.rankData.text.strip()[1:].replace(",", "")), self.totalTimeTaken)
         except: return (None, None)
 
 class RestAPI():
