@@ -10,7 +10,7 @@ class RankScrapper:
     def __init__(self, user_url) -> None:
         self.baseUrl:str = "https://www.alexa.com/siteinfo/"
         self.url:str = self.baseUrl + user_url
-    async def get_rank(self) -> int:
+    async def get_rank(self) -> tuple:
         self.timeStart:float = time()
         self.htmlData:str = get(url=self.url).text
         self.soup:BeautifulSoup = BeautifulSoup(self.htmlData, features="lxml")
