@@ -19,7 +19,7 @@ class RankScrapper:
         self.timeEnd:float = time()
         self.totalTimeTaken:float = float("%0.2f"%(self.timeEnd - self.timeStart))
         try: return (int(self.rankData.text.strip()[1:].replace(",", "")), self.totalTimeTaken)
-        except: return (None, None)
+        except: return (None, self.totalTimeTaken)
 
 class RestAPI:
     def __init__(self) -> None:
@@ -40,7 +40,7 @@ class RestAPI:
             self.rs = RankScrapper(self.user_url)
             self.rank, self.timeTaken = await self.rs.get_rank()
             if self.rank: return {'domain_name':self.user_url, 'alexa_rank': self.rank, 'time_taken': self.timeTaken} 
-            else: return{'message': "Invalid domain name given", 'domain':self.user_url}
+            else: return{'alexa_rank': "Invalid domain name given", 'domain_name':self.user_url, 'time_taken': self.timeTaken}
 
 
 
