@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from requests import get
 from typing import Optional
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from time import time
 import uvicorn
 
@@ -20,9 +21,16 @@ class RankScrapper:
         try: return (int(self.rankData.text.strip()[1:].replace(",", "")), self.totalTimeTaken)
         except: return (None, None)
 
-class RestAPI():
+class RestAPI:
     def __init__(self) -> None:
         self.app:FastAPI = FastAPI()
+        self.app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
         @self.app.get('/')
         def index(request:Request):
             return {'status':'online', 'host':request.headers.get('host')}
@@ -40,4 +48,4 @@ ra:RestAPI = RestAPI()
 app:FastAPI = ra.app
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', host='0.0.0.0',port=5099,log_level='info')
+    uvicorn.run('main:app', host='0.0.0.0',port=5099, log_level='info')
