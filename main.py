@@ -39,7 +39,7 @@ class RestAPI:
             self.user_url = url
             self.rs = RankScrapper(self.user_url)
             self.rank, self.timeTaken = await self.rs.get_rank()
-            if self.rank: return {'domain_name':self.user_url, 'alexa_rank': self.rank, 'time_taken(s)': self.timeTaken} 
+            if self.rank: return {'domain_name':self.user_url, 'alexa_rank': self.rank, 'time_taken': self.timeTaken} 
             else: return{'message': "Invalid domain name given", 'domain':self.user_url}
 
 
